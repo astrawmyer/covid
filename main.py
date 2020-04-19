@@ -19,20 +19,48 @@ def USApos():
     plt.show()
 
 def StatePos():
-    pos = []
-    for x in jsonStates:
-        if x['state'] == "OK":
-            pos.insert(0,x['positive'])
-    plt.plot(pos)
-    plt.show()
+    
+    while True:
+        state = input("What State?\n")
+        state = state.upper()
+        pos = []
+        for x in jsonStates:
+            if x['state'] == state:
+                pos.insert(0,x['positive'])
+        plt.plot(pos)
+        plt.ylabel("Positive Cases")
+        plt.xlabel("Days")
+        plt.suptitle(state)
+        plt.show()
+        leave = input("Exit to main menu?(Y/N)\n")
+        leave = leave.upper()
+        if leave == "Y":
+            break
 
-
+def StateNewPos():
+    
+    while True:
+        state = input("What State?\n")
+        state = state.upper()
+        pos = []
+        for x in jsonStates:
+            if x['state'] == state:
+                pos.insert(0,x['positiveIncrease'])
+        plt.plot(pos)
+        plt.ylabel("New Positive Cases")
+        plt.xlabel("Days")
+        plt.suptitle(state)
+        plt.show()
+        leave = input("Exit to main menu?(Y/N)\n")
+        leave = leave.upper()
+        if leave == "Y":
+            break
 
 if __name__ == "__main__":
-    main_switch_function = {"1": USApos, "2": StatePos, "3": USApos, "4": USApos, "5": exit}
+    main_switch_function = {"1": USApos, "2": StatePos, "3": StateNewPos, "4": exit}
     while True:
         print("What do you want to do?")
-        response = input("1. USA Positive chart, 2. Create a Report, 3. Send all letters, 4. Projection, 5. Quit: ")
+        response = input("1. USA Cumulative Positive\n2. State Cumulative Positive\n3. State New Positive\n4. Quit:\n")
         try:
             main_switch_function.get(response)()
         except TypeError:
