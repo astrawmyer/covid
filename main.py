@@ -18,6 +18,13 @@ def USApos():
     plt.plot(pos)
     plt.show()
 
+def USAdeath():
+    pos = []
+    for x in jsonUSA:
+        pos.insert(0,x['death'])
+    plt.plot(pos)
+    plt.show()
+
 def StatePos():
     
     while True:
@@ -57,10 +64,10 @@ def StateNewPos():
             break
 
 if __name__ == "__main__":
-    main_switch_function = {"1": USApos, "2": StatePos, "3": StateNewPos, "4": exit}
+    main_switch_function = {"1": USApos, "2": StatePos, "3": StateNewPos, "4": USAdeath, "5": exit}
     while True:
         print("What do you want to do?")
-        response = input("1. USA Cumulative Positive\n2. State Cumulative Positive\n3. State New Positive\n4. Quit:\n")
+        response = input("1. USA Cumulative Positive\n2. State Cumulative Positive\n3. State New Positive\n4. USA Cumulative Death\n5. Quit:\n")
         try:
             main_switch_function.get(response)()
         except TypeError:
