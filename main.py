@@ -18,6 +18,20 @@ def USApos():
     plt.plot(pos)
     plt.show()
 
+def USANewPos():
+    pos = []
+    for x in jsonUSA:
+        pos.insert(0,x['positiveIncrease'])
+    plt.plot(pos)
+    plt.show()
+
+def USANewDeath():
+    pos = []
+    for x in jsonUSA:
+        pos.insert(0,x['deathIncrease'])
+    plt.plot(pos)
+    plt.show()
+
 def USAdeath():
     pos = []
     for x in jsonUSA:
@@ -26,7 +40,6 @@ def USAdeath():
     plt.show()
 
 def StatePos():
-    
     while True:
         state = input("What State?\n")
         state = state.upper()
@@ -35,7 +48,7 @@ def StatePos():
             if x['state'] == state:
                 pos.insert(0,x['positive'])
         plt.plot(pos)
-        plt.ylabel("Positive Cases")
+        plt.ylabel("Total Positive Cases")
         plt.xlabel("Days")
         plt.suptitle(state)
         plt.show()
@@ -45,7 +58,6 @@ def StatePos():
             break
 
 def StateNewPos():
-    
     while True:
         state = input("What State?\n")
         state = state.upper()
@@ -63,11 +75,48 @@ def StateNewPos():
         if leave == "Y":
             break
 
+def StateDeath():
+    while True:
+        state = input("What State?\n")
+        state = state.upper()
+        pos = []
+        for x in jsonStates:
+            if x['state'] == state:
+                pos.insert(0,x['death']) #this is causing an error
+        plt.plot(pos)
+        plt.ylabel("Total Deaths")
+        plt.xlabel("Days")
+        plt.suptitle(state)
+        plt.show()
+        leave = input("Exit to main menu?(Y/N)\n")
+        leave = leave.upper()
+        if leave == "Y":
+            break
+
+def StateNewDeath():
+    while True:
+        state = input("What State?\n")
+        state = state.upper()
+        pos = []
+        for x in jsonStates:
+            if x['state'] == state:
+                pos.insert(0,x['deathIncrease'])
+        plt.plot(pos)
+        plt.ylabel("New Deaths")
+        plt.xlabel("Days")
+        plt.suptitle(state)
+        plt.show()
+        leave = input("Exit to main menu?(Y/N)\n")
+        leave = leave.upper()
+        if leave == "Y":
+            break
+
 if __name__ == "__main__":
-    main_switch_function = {"1": USApos, "2": StatePos, "3": StateNewPos, "4": USAdeath, "5": exit}
+    main_switch_function = {"1": USApos, "2": USANewPos, "3": USAdeath, "4": USANewDeath, "5": StatePos, "6": StateNewPos, "7": StateDeath, "8": StateNewDeath, "9": exit}
     while True:
         print("What do you want to do?")
-        response = input("1. USA Cumulative Positive\n2. State Cumulative Positive\n3. State New Positive\n4. USA Cumulative Death\n5. Quit:\n")
+        response = input(
+            "1. USA Cumulative Positive\n2. State Cumulative Positive\"3. State New Positive\n4. USA Cumulative Death\n5. Quit:\n")
         try:
             main_switch_function.get(response)()
         except TypeError:
